@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/zyxt?characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: '123456'
+  redis:
+    host: localhost
+    port: 6379
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.springbootvuedemo1.entity
+
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+
+

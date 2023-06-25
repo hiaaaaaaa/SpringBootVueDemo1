@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootvuedemo1.mapper.TeacherMapper">
+    <select id="listAll" parameterType="com.example.springbootvuedemo1.entity.Teacher" resultType="com.example.springbootvuedemo1.entity.Teacher">
+        select * from teacher
+    </select>
+
+    <select id="listOne" parameterType="com.example.springbootvuedemo1.entity.Teacher" resultType="com.example.springbootvuedemo1.entity.Teacher">
+        select * from teacher
+        <where>
+            <if test="tname!=null">
+                and tname=#{tname}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addUpdate" parameterType="com.example.springbootvuedemo1.entity.Teacher">
+        insert into teacher (userName,password,tname,sex,age,email,phoneNumber)
+        values (#{userName},#{password},#{tname},#{sex},#{age},#{email},#{phoneNumber})
+    </insert>
+
+    <delete id="delById" parameterType="java.lang.Integer">
+        delete from teacher where tid=#{tid}
+    </delete>
+
+    <update id="modUpdate" parameterType="com.example.springbootvuedemo1.entity.Teacher">
+        update teacher
+        <set>
+            <if test="userName!=null and userName != ''">
+                userName=#{userName},
+            </if>
+            <if test="password!=null and password != ''">
+                password=#{password},
+            </if>
+            <if test="tname!=null and tname != ''">
+                tname=#{tname},
+            </if>
+            <if test="sex!=null and sex != ''">
+                sex=#{sex},
+            </if>
+            <if test="age!=null and age != 0">
+                age=#{age},
+            </if>
+            <if test="email!=null and email != ''">
+                email=#{email},
+            </if>
+            <if test="phoneNumber!=null and phoneNumber != ''">
+                phoneNumber=#{phoneNumber},
+            </if>
+        </set>
+        where tid=#{tid}
+    </update>
+
+    <!--定义结果映射，因为表字段名与实体属性名不完全一致-->
+    <resultMap id="teacherMap" type="com.example.springbootvuedemo1.entity.Teacher">
+        <result property="tid" column="tid"/>
+        <result property="userName" column="userName"/>
+        <result property="password" column="password"/>
+        <result property="tname" column="tname"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phoneNumber"/>
+    </resultMap>
+
+    <select id="selectByTeacherName" resultMap="teacherMap">
+        select * from teacher where userName=#{userName}
+    </select>
+
+    <!--修改个人资料-->
+    <update id="updateTeacher">
+        update teacher
+        <set>
+            <if test="tname!=null and tname!=''">
+                tname=#{tname}
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex=#{sex}
+            </if>
+            <if test="age!=null and age!=''">
+                age=#{age}
+            </if>
+            <if test="email!=null and email!=''">
+                email=#{email}
+            </if>
+            <if test="phoneNumber!=null and phoneNumber!=''">
+                phoneNumber=#{phoneNumber}
+            </if>
+        </set>
+    </update>
+
+    <!--修改密码-->
+    <update id="updatePassword">
+        update teacher set password=#{password}
+        where userName=#{userName}
+    </update>
+
+    <!--注册功能-->
+    <insert id="loginIn">
+        insert into teacher(userName,password) values (#{userName},#{password})
+    </insert>
+
+<!--    <select id="pageC" resultType="com.example.edudemo.entity.User">-->
+<!--        select * from user-->
+<!--    </select>-->
+</mapper>

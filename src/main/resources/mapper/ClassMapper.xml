@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springbootvuedemo1.mapper.ClassMapper">
+    <select id="listY" resultType="com.example.springbootvuedemo1.entity.Class">
+select * from class left join sc on class.cid=sc.cid where sc.sid=#{sid}
+--         select class.cid,class.cname,class.cdescribe,class.tid
+--         from class left join sc on class.cid=sc.cid
+--         where sc.sid=#{sid} and sc.state=1
+    </select>
+
+    <resultMap id="classInfoMap" type="com.example.springbootvuedemo1.entity.Class">
+        <id column="cid" property="cid"/>
+        <result column="cname" property="cname"/>
+        <result column="cdescribe" property="cdescribe"/>
+        <result column="tid" property="tid"/>
+        <result column="tname" property="tname"/>
+    </resultMap>
+    <select id="getYClassInfoBySid" resultMap="classInfoMap">
+        select c.cid, c.cname, c.cdescribe, t.tid, t.tname
+        from class c, teacher t, sc s
+        where c.tid = t.tid and c.cid = s.cid and s.sid = #{sid} and s.state = 1
+    </select>
+    <select id="getNClassInfoBySid" resultMap="classInfoMap">
+        select class.*,teacher.tname from class,teacher
+        where cid not in
+              (select sc.cid from sc where sc.sid =#{sid} and sc.state = 1)
+          and class.tid=teacher.tid
+    </select>
+
+
+</mapper>
