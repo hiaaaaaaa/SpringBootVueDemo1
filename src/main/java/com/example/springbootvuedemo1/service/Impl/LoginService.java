@@ -59,21 +59,19 @@ public class LoginService {
         }
         else if ("manager".equals(role)){
             // 1.根据学员账号查询学员信息
-            List<Manager> manager = managerMapper.selectByManagerName(userName);
+            Manager m = managerMapper.selectByManagerName(userName);
             // 2.如果学员信息查询到了，则对比密码
-            for(Manager m:manager){
-                if(m!=null && m.getPassword().equals(pwd)){
-                    cacheService.add("user",m);
-                    rs.put("msg","管理员登录成功！");
-                    rs.put("user",m.getUserName());
-                    m.setPassword(null);
-                    rs.put("manager",m);
-                    System.out.println("管理员登录成功");
-                }else {
-                    rs.put("msg", "管理员登录失败！");
-                    rs.put("user", null);
-                    System.out.println("管理员登录失败");
-                }
+            if(m!=null && m.getPassword().equals(pwd)){
+                cacheService.add("user",m);
+                rs.put("msg","管理员登录成功！");
+                rs.put("user",m.getUserName());
+                m.setPassword(null);
+                rs.put("manager",m);
+                System.out.println("管理员登录成功");
+            }else {
+                rs.put("msg", "管理员登录失败！");
+                rs.put("user", null);
+                System.out.println("管理员登录失败");
             }
         }
         else{

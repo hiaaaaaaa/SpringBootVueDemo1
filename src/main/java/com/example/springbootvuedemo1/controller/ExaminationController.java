@@ -1,17 +1,13 @@
 package com.example.springbootvuedemo1.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.springbootvuedemo1.entity.Examination;
 import com.example.springbootvuedemo1.entity.Question;
 import com.example.springbootvuedemo1.entity.Teacher;
 import com.example.springbootvuedemo1.service.Impl.ExaminationImpl;
 import com.example.springbootvuedemo1.util.CacheService;
 import com.example.springbootvuedemo1.util.R;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,22 +33,44 @@ public class ExaminationController {
     * grade:年级
     * type:试卷类型
     * */
+    private byte[][] defaultImage = new byte[3][];//默认图片
 
     @ResponseBody
     @RequestMapping(value = "/createExamination",produces = "application/json; charset=UTF-8")
-    public R createExamination(MultipartFile multipartFile, String ename, String edescribe, String questions){
-        byte[] image=null;
-        //获取文件二进制格式
-        try {
-            image = multipartFile.getBytes();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("questions:"+questions);
+    public R createExamination(MultipartFile multipartFile, String ename, String edescribe, String questions,Integer defaultImageIndex){
         Teacher teacher= cacheService.getObject("user",Teacher.class);
         if(teacher==null){
             return R.error(100,"请先登录！");
         }
+        byte[] image=null;
+        //如果没有上传图片，使用默认图片
+        if(multipartFile==null){
+            //如果默认图片为空，读取默认图片
+            if(defaultImage[0]==null){
+                try {
+                    defaultImage[0]= IOUtils.toByteArray(getClass().getResourceAsStream("/static/examdefaultpic/default01.jpg"));
+                    defaultImage[1]=IOUtils.toByteArray(getClass().getResourceAsStream("/static/examdefaultpic/default02.jpg"));
+                    defaultImage[2]=IOUtils.toByteArray(getClass().getResourceAsStream("/static/examdefaultpic/default03.jpg"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+
+                }
+            }
+            else{
+                image=defaultImage[defaultImageIndex];
+            }
+
+        }
+        else {
+            //获取文件二进制格式
+            try {
+                image = multipartFile.getBytes();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        System.out.println("questions:"+questions);
         System.out.println("ename:"+ename);
         System.out.println("edescribe:"+edescribe);
         //调用service层,创建试卷
