@@ -33,6 +33,13 @@ public class ExaminationImpl {
             //将图片转换为base64编码
             String imageBase64=Base64Encoder.encode(examinations.get(i).getImage());
             examinations.get(i).setImageBase64(imageBase64);
+            //如果教师头像不为空，将教师头像转换为base64编码
+            if(examinations.get(i).getTeacher().getImage()!=null){
+                String timageBase64=Base64Encoder.encode(examinations.get(i).getTeacher().getImage());
+                examinations.get(i).getTeacher().setImageBase64(timageBase64);
+            }
+            //将教师的密码置空
+            examinations.get(i).getTeacher().setPassword(null);
         }
         return examinations;
     }

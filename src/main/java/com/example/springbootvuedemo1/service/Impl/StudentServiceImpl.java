@@ -1,9 +1,11 @@
 package com.example.springbootvuedemo1.service.Impl;
 
+import cn.hutool.core.codec.Base64Encoder;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springbootvuedemo1.entity.Question;
 import com.example.springbootvuedemo1.entity.SC;
+import com.example.springbootvuedemo1.entity.Score;
 import com.example.springbootvuedemo1.entity.Student;
 import com.example.springbootvuedemo1.mapper.QuestionMapper;
 import com.example.springbootvuedemo1.mapper.StudentMapper;
@@ -150,5 +152,22 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
 
-
+    public List<Score> selectScore(Integer sid) {
+        List<Score> scoreList = studentMapper.selectScoreBySid(sid);
+        for (Score score : scoreList) {
+            //如果试卷图片不为空，将图片转换为base64
+            if (score.getExamination().getImage()!= null) {
+                String base64 = Base64Encoder.encode(score.getExamination().getImage());
+                score.getExamination().setImageBase64(base64);
+            }
+            //如果教师头像不为空，将图片转换为base64
+            if (score.getExamination().getTeacher().getImage()!= null) {
+                String base64 = Base64Encoder.encode(score.getExamination().getTeacher().getImage());
+                score.getExamination().getTeacher().setImageBase64(base64);
+            }
+            //将教师密码置空
+            score.getExamination().getTeacher().setPassword(null);
+        }
+        return scoreList;
+    }
 }

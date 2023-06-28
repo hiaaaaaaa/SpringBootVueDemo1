@@ -2,7 +2,9 @@ package com.example.springbootvuedemo1.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.springbootvuedemo1.entity.Examination;
 import com.example.springbootvuedemo1.entity.SC;
+import com.example.springbootvuedemo1.entity.Score;
 import com.example.springbootvuedemo1.entity.Student;
 import org.apache.ibatis.annotations.*;
 
@@ -35,6 +37,14 @@ public interface StudentMapper extends BaseMapper<Student> {
     @Delete("delete from sc where sid=#{sid} and cid=#{cid}")
     void deleteStudentClass(Integer sid, Integer cid);
 
+    //查询学生成绩以及对应试卷信息，返回值为Score类，其中根据eid返回的examination对象
+    @Select("select * from es where sid=#{sid}")
+    @Results(
+            @Result(property = "examination",column = "eid",
+                    javaType= Examination.class,
+                    one=@One(select = "com.example.springbootvuedemo1.mapper.ExaminationMapper.selectExaminationById"))
+    )
+    List<Score> selectScoreBySid(Integer sid);
 
     /*
     * 作者：万梓欣

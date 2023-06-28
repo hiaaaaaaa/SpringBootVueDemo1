@@ -46,6 +46,11 @@ public interface ExaminationMapper {
             "and e.edescribe like CONCAT('%',#{keydescribe},'%')" +
             "</if>" +
             "</script>")
+    @Results(value = {
+            @Result(property = "teacher",column = "tid",
+                    javaType= Teacher.class,
+                    one=@One(select = "com.example.springbootvuedemo1.mapper.TeacherMapper.selectByTeacherId"))
+    })
     List<Examination> selectExamination(String keyword,String tname,String keydescribe);
 
     //根据老师姓名、试卷名关键词、试卷描述关键词查询试卷总数，老师姓名、试卷名关键词、试卷描述可以为空
@@ -62,4 +67,13 @@ public interface ExaminationMapper {
             "</if>" +
             "</script>")
     Integer selectExaminationCount(String keyword,String tname,String keydescribe);
+
+    //根据试卷id查询试卷
+    @Select("select * from examination e,teacher t where e.tid=t.tid and e.eid=#{eid}")
+    @Results(value = {
+            @Result(property = "teacher",column = "tid",
+                    javaType= Teacher.class,
+                    one=@One(select = "com.example.springbootvuedemo1.mapper.TeacherMapper.selectByTeacherId"))
+    })
+    Examination selectExaminationById(Integer eid);
 }

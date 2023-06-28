@@ -3,6 +3,7 @@ package com.example.springbootvuedemo1.controller;
 import cn.hutool.core.codec.Base64Encoder;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.springbootvuedemo1.entity.SC;
+import com.example.springbootvuedemo1.entity.Score;
 import com.example.springbootvuedemo1.entity.Student;
 import com.example.springbootvuedemo1.service.Impl.LoginService;
 import com.example.springbootvuedemo1.service.Impl.StudentServiceImpl;
@@ -56,6 +57,15 @@ public class StudentController {
         //插入成绩表
         studentServiceImpl.insertScore(sid,eid,score);
         return R.ok("提交成功！");
+    }
+
+    //学生查看自己的成绩以及试卷信息
+    @ResponseBody
+    @RequestMapping("/selectScore")
+    public R selectScore(Integer sid){
+        //调用service层,学生查看自己的成绩以及试卷信息
+        List<Score> list = studentServiceImpl.selectScore(sid);
+        return R.ok().setData(list);
     }
 
     /*
@@ -305,7 +315,5 @@ public class StudentController {
 
         return student;
 
-
     }
-
 }

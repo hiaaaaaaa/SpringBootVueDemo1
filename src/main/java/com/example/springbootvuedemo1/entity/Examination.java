@@ -14,11 +14,9 @@ public class Examination {
     private Integer eid;
     private String ename;
     private String edescribe;
-//    private Teacher teacher;
+    private Teacher teacher;
     private Integer tid;
-    private String tname;
     private byte[] image;
-
     private String imageBase64;
 
 }
