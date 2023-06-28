@@ -35,6 +35,7 @@ public class LoginService {
                 cacheService.add("user",t);
                 rs.put("msg","教师登录成功！");
                 rs.put("user",t.getUserName());
+                t.setImage(null);
                 t.setPassword(null);
                 rs.put("teacher",t);
             }else {
