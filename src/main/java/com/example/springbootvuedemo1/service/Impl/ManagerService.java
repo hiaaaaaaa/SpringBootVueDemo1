@@ -35,8 +35,18 @@ public class ManagerService {
     }
 
     //注册功能
-    public void loginIn(String userName,String password){
-        managerMapper.loginIn(userName,password);
+    public void loginIn(String userName,String password,byte[] image){
+        managerMapper.loginIn(userName,password,image);
+    }
+
+
+    public Manager getImagebaseService(String userName) {
+        return managerMapper.getImagebase(userName);
+    }
+
+    //修改头像
+    public void updateImage(byte[] image,String userName){
+        managerMapper.updateImage(image,userName);
     }
 
 }

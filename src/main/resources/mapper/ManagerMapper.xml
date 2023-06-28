@@ -50,7 +50,13 @@
 
     <!--注册功能-->
     <insert id="loginIn">
-        insert into manager(userName,password) values (#{userName},#{password})
+        insert into manager(userName,password,image) values (#{userName},#{password},#{image})
     </insert>
+
+    <!--修改头像-->
+    <update id="updateImage">
+        update manager set image=#{image}
+        where userName=#{userName}
+    </update>
 
 </mapper>
