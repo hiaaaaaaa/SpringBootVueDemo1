@@ -51,6 +51,7 @@ public class LoginService {
                 cacheService.add("user",s);
                 rs.put("msg","学生登录成功！");
                 rs.put("user",s.getUserName());
+                s.setImage(null);
                 s.setPassword(null);
                 rs.put("student",s);
             }else {
@@ -66,6 +67,7 @@ public class LoginService {
                 cacheService.add("user",m);
                 rs.put("msg","管理员登录成功！");
                 rs.put("user",m.getUserName());
+                m.setImage(null);
                 m.setPassword(null);
                 rs.put("manager",m);
                 System.out.println("管理员登录成功");
