@@ -51,7 +51,7 @@ public class ExaminationImpl {
         //插入试题表
         for (int i=0;i<questions.size();i++){
             Question q=questions.get(i);
-            questionMapper.uploadQuestion(eid,i+1,q.getQdescribe(),q.getAnswer(),q.getPoint());
+            questionMapper.uploadQuestion(eid,i+1,q.getQdescribe(),q.getAnswer(),q.getPoint(),q.getQtype(),q.getA(),q.getB(),q.getC(),q.getD());
         }
     }
 

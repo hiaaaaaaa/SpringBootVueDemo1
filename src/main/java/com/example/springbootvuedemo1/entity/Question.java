@@ -19,6 +19,17 @@ public class Question {
 
     private Integer point;
 
+    private String qtype;
+
+    private String a;
+
+    private String b;
+
+    private String c;
+
+    private String d;
+
+
     //没有eid和qid的构造方法
 
     public Question(String qdescribe, String answer,Integer point) {

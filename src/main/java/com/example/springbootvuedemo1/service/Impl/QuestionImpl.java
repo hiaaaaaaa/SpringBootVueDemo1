@@ -15,8 +15,8 @@ public class QuestionImpl {
     private QuestionMapper questionMapper;
     //表名为examquestion包含字段eid、qid、qdescribe、answer
     //添加题目
-    public void uploadQuestion(Integer eid, Integer qid, String qdescribe, String answer,Integer point){
-        questionMapper.uploadQuestion(eid,qid,qdescribe,answer,point);
+    public void uploadQuestion(Integer eid, Integer qid, String qdescribe, String answer,Integer point,String qtype,String a,String b,String c,String d){
+        questionMapper.uploadQuestion(eid,qid,qdescribe,answer,point,qtype,a,b,c,d);
     }
     //根据id删除题目
     public void deleteQuestionById(Integer qid){
