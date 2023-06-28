@@ -1,5 +1,6 @@
 package com.example.springbootvuedemo1.controller;
 
+import cn.hutool.core.codec.Base64Encoder;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.springbootvuedemo1.entity.SC;
 import com.example.springbootvuedemo1.entity.Student;
@@ -9,9 +10,11 @@ import com.example.springbootvuedemo1.service.StudentService;
 import com.example.springbootvuedemo1.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -250,12 +253,19 @@ public class StudentController {
 
     //注册接口
     @RequestMapping("/loginInStu")
-    public R loginInStu(String userName, String pwd, String role, HttpServletRequest request){
+    public R loginInStu(String userName, String pwd, String role, MultipartFile multipartFile, HttpServletRequest request){
         Map rm = loginService.regcheck(userName,pwd,role);
+        byte[] image=null;
+        //获取文件二进制格式
+        try {
+            image = multipartFile.getBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (rm.get("user")==null){//账号不存在
             request.getSession().setAttribute("user",rm.get("user"));
             request.getSession().setAttribute("role",role);
-            studentServiceImpl.loginIn(userName,pwd);
+            studentServiceImpl.loginIn(userName,pwd,image);
             System.out.println("学生账号注册成功");
             return R.ok();
         }
@@ -264,6 +274,38 @@ public class StudentController {
             System.out.println("学生账号已存在");
             return R.error(100,"该学生账号已存在");
         }
+    }
+
+    //显示头像
+    @GetMapping("/getStuImage")
+    public Student gteImage(){
+        Student student = studentServiceImpl.getImagebaseService_Stu(login_userName);
+        //将图片转换为base64编码
+        String imageBase64= Base64Encoder.encode(student.getImage());
+        student.setImageBase64(imageBase64);
+
+        return student;//前端获取imageBase64字段用于显示头像
+    }
+
+    //修改头像
+    @RequestMapping("/updateStuImageData")
+    public Student updateImageData( MultipartFile multipartFile){
+        byte[] image=null;
+        //获取文件二进制格式
+        try {
+            image = multipartFile.getBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        studentServiceImpl.updateImage_Stu(image,login_userName);
+        Student student = studentServiceImpl.getImagebaseService_Stu(login_userName);
+        //将图片转换为base64编码
+        String imageBase64= Base64Encoder.encode(student.getImage());
+        student.setImageBase64(imageBase64);
+
+        return student;
+
+
     }
 
 }

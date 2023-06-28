@@ -35,4 +35,6 @@ public class Student {
     @Transient
     @TableField(exist = false)
     private String cname;
+    private byte[] image;
+    private String imageBase64;
 }

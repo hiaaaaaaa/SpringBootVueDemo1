@@ -61,9 +61,17 @@ public interface StudentMapper extends BaseMapper<Student> {
 
     //注册功能
     void loginIn(@Param("userName") String userName,
-                 @Param("password") String password);
+                 @Param("password") String password,
+                 @Param("image") byte[] image);
 
     //查询账号是否已经注册
     @Select("select * from student where userName=#{userName}")
     List<Student> registerCheck(String userName);
+
+    @Select("SELECT * FROM student WHERE userName=#{userName}")
+    Student getImagebase(String userName);
+
+    //修改头像
+    void updateImage_Stu(@Param("image") byte[] image,
+                         @Param("userName") String userName);
 }

@@ -135,8 +135,18 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     //注册功能
-    public void loginIn(String userName,String password){
-        studentMapper.loginIn(userName,password);
+    public void loginIn(String userName,String password,byte[] image){
+        studentMapper.loginIn(userName,password,image);
+    }
+
+
+    public Student getImagebaseService_Stu(String userName) {
+        return studentMapper.getImagebase(userName);
+    }
+
+    //修改头像
+    public void updateImage_Stu(byte[] image,String userName){
+        studentMapper.updateImage_Stu(image,userName);
     }
 
 
