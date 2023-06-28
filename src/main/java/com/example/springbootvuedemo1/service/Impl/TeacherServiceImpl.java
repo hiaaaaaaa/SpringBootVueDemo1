@@ -76,8 +76,17 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
     }
 
     //注册功能
-    public void loginIn(String userName,String password){
-        teacherMapper.loginIn(userName,password);
+    public void loginIn(String userName,String password,byte[] image){
+        teacherMapper.loginIn(userName,password,image);
+    }
+
+    public Teacher getImagebaseService_Tea(String userName) {
+        return teacherMapper.getImagebase_Tea(userName);
+    }
+
+    //修改头像
+    public void updateImage_Tea(byte[] image,String userName){
+        teacherMapper.updateImage_Tea(image,userName);
     }
 
 }

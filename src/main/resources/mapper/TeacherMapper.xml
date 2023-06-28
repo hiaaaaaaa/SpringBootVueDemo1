@@ -99,8 +99,14 @@
 
     <!--注册功能-->
     <insert id="loginIn">
-        insert into teacher(userName,password) values (#{userName},#{password})
+        insert into teacher(userName,password,image) values (#{userName},#{password},#{image})
     </insert>
+
+    <!--修改头像-->
+    <update id="updateImage_Tea">
+        update teacher set image=#{image}
+        where userName=#{userName}
+    </update>
 
 <!--    <select id="pageC" resultType="com.example.edudemo.entity.User">-->
 <!--        select * from user-->

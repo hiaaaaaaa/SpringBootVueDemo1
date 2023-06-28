@@ -28,4 +28,8 @@ public class Teacher {
     private String email;
     @TableField("phoneNumber")
     private String phoneNumber;
+
+    private byte[] image;
+
+    private String imageBase64;
 }

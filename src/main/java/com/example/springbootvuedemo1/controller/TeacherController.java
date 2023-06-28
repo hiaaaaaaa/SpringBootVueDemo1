@@ -1,5 +1,6 @@
 package com.example.springbootvuedemo1.controller;
 
+import cn.hutool.core.codec.Base64Encoder;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.springbootvuedemo1.entity.Teacher;
 import com.example.springbootvuedemo1.service.Impl.LoginService;
@@ -8,8 +9,10 @@ import com.example.springbootvuedemo1.service.TeacherService;
 import com.example.springbootvuedemo1.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -130,12 +133,19 @@ public class TeacherController {
 
     //注册接口
     @RequestMapping("/loginInTea")
-    public R loginInTea(String userName, String pwd, String role, HttpServletRequest request){
+    public R loginInTea(String userName, String pwd, String role,MultipartFile multipartFile,HttpServletRequest request){
         Map rm = loginService.regcheck(userName,pwd,role);
+        byte[] image=null;
+        //获取文件二进制格式
+        try {
+            image = multipartFile.getBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (rm.get("user")==null){//账号不存在
             request.getSession().setAttribute("user",rm.get("user"));
             request.getSession().setAttribute("role",role);
-            teacherServiceImpl.loginIn(userName,pwd);
+            teacherServiceImpl.loginIn(userName,pwd,image);
             System.out.println("教师账号注册成功");
             return R.ok();
         }
@@ -144,6 +154,38 @@ public class TeacherController {
             System.out.println("教师账号已存在");
             return R.error(100,"该教师账号已存在");
         }
+    }
+
+    //显示头像
+    @GetMapping("/getTeaImage")
+    public Teacher getTeaImage(){
+        Teacher teacher = teacherServiceImpl.getImagebaseService_Tea(login_userName);
+        //将图片转换为base64编码
+        String imageBase64= Base64Encoder.encode(teacher.getImage());
+        teacher.setImageBase64(imageBase64);
+
+        return teacher;//前端获取imageBase64字段用于显示头像
+    }
+
+    //修改头像
+    @RequestMapping("/updateTeaImageData")
+    public Teacher updateImageData( MultipartFile multipartFile){
+        byte[] image=null;
+        //获取文件二进制格式
+        try {
+            image = multipartFile.getBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        teacherServiceImpl.updateImage_Tea(image,login_userName);
+        Teacher teacher = teacherServiceImpl.getImagebaseService_Tea(login_userName);
+        //将图片转换为base64编码
+        String imageBase64= Base64Encoder.encode(teacher.getImage());
+        teacher.setImageBase64(imageBase64);
+
+        return teacher;
+
+
     }
 
 
