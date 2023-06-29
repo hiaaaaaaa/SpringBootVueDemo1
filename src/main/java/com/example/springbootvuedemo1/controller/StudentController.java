@@ -82,7 +82,7 @@ public class StudentController {
     }
 
 
-    //管理员根据学生姓名进行查询
+    //管理员根据学生姓名（sname）进行查询
     @GetMapping("/student/lists")
     @ResponseBody
     public R getList(Student student){
@@ -103,7 +103,7 @@ public class StudentController {
         }
     }
 
-    //管理员对学生表中删除数据
+    //管理员根据学生id（sid）删除学生数据
     @DeleteMapping ("/student/delete")
     @ResponseBody
     public R delete(@RequestBody Student student){
@@ -115,7 +115,7 @@ public class StudentController {
         }
     }
 
-    //管理员修改学生表中数据
+    //管理员根据学生id（sid）修改学生表中数据
     @PutMapping("/student/mod")
     @ResponseBody
     public R mod(@RequestBody Student student){
@@ -127,25 +127,13 @@ public class StudentController {
         }
     }
 
-    //管理员模糊查询表中数据（模糊、匹配）
-    @PostMapping("/student/listP")
-    @ResponseBody
-    public List<Student> listP(@RequestBody Student student){
-        LambdaQueryWrapper<Student> lambdaQueryWrapper = new LambdaQueryWrapper();
-        //模糊查询
-        lambdaQueryWrapper.like(Student::getSname, student.getSname());
-        //完全匹配
-        //lambdaQueryWrapper.eq(User::getName,user.getName());
-        return studentService.list(lambdaQueryWrapper);
-    }
-
     //教师查看所有学生列表数据
     @GetMapping("/student/tlistall")
     public List<Student> tlistall(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
         return studentService.listAllStudent(pageNum, pageSize);
     }
 
-    //教师根据学生姓名进行查询
+    //教师根据学生姓名（sname）进行查询
     @GetMapping("/student/tlists")
     @ResponseBody
     public R tgetList(Student student){
@@ -154,19 +142,7 @@ public class StudentController {
         return R.ok().setData(list);
     }
 
-    //教师模糊查询学生表中数据（模糊、匹配）
-    @PostMapping("/student/tlistP")
-    @ResponseBody
-    public List<Student> tlistP(@RequestBody Student student){
-        LambdaQueryWrapper<Student> lambdaQueryWrapper = new LambdaQueryWrapper();
-        //模糊查询
-        lambdaQueryWrapper.like(Student::getSname, student.getSname());
-        //完全匹配
-        //lambdaQueryWrapper.eq(User::getName,user.getName());
-        return studentService.list(lambdaQueryWrapper);
-    }
-
-    //教师根据学生id删除学生表中学生数据
+    //教师根据学生id（sid）删除学生表中学生数据
     @DeleteMapping ("/student/tdelete")
     @ResponseBody
     public R tdelete(@RequestBody Student student){

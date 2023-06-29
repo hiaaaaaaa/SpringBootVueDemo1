@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springbootvuedemo1.mapper.TeacherMapper">
     <select id="listAll" parameterType="com.example.springbootvuedemo1.entity.Teacher" resultType="com.example.springbootvuedemo1.entity.Teacher">
-        select * from teacher
+        select tid,userName,password,tname,sex,age,email,phoneNumber from teacher
     </select>
 
     <select id="listOne" parameterType="com.example.springbootvuedemo1.entity.Teacher" resultType="com.example.springbootvuedemo1.entity.Teacher">
-        select * from teacher
+        select tid,userName,password,tname,sex,age,email,phoneNumber from teacher
         <where>
             <if test="tname!=null">
                 and tname=#{tname}

@@ -23,12 +23,14 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements
     /*
      *作者：周慧
      * */
+    //学生查看已加入班级情况
     @Override
     public List<Class> getYClassInfoBySid(int sid,int pageNum, int pageSize) {
         Page<Student> page = new Page<>(pageNum, pageSize);
         return classMapper.getYClassInfoBySid(sid,page).getRecords();
     }
 
+    //学生查看未加入班级情况
     @Override
     public List<Class> getNClassInfoBySid(int sid,int pageNum, int pageSize) {
         Page<Student> page = new Page<>(pageNum, pageSize);

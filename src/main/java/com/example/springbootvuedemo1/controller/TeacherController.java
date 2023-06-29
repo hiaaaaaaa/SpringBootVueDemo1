@@ -13,6 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -22,22 +26,13 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
+    //管理员查看所有教师列表
     @GetMapping("/teacher/listallTeacher")
     public List<Teacher> getall(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
         return teacherService.listAllTeacher(pageNum, pageSize);
     }
 
-    @PostMapping("/teacher/FQlistTeacher")
-    @ResponseBody
-    public List<Teacher> FQlist(@RequestBody Teacher teacher){
-        LambdaQueryWrapper<Teacher> lambdaQueryWrapper = new LambdaQueryWrapper();
-        //模糊查询
-        lambdaQueryWrapper.like(Teacher::getTname, teacher.getTname());
-        //完全匹配
-        //lambdaQueryWrapper.eq(User::getName,user.getName());
-        return teacherService.list();
-    }
-
+    //管理员根据姓名（tname）查询教师
     @GetMapping("/teacher/listoneTeacher")
     @ResponseBody
     public R getone(Teacher teacher){
@@ -45,6 +40,7 @@ public class TeacherController {
         return R.ok().setData(list);
     }
 
+    //管理员添加教师用户
     @PostMapping("/teacher/saveTeacher")
     @ResponseBody
     public R insert(@RequestBody Teacher teacher){
@@ -56,6 +52,8 @@ public class TeacherController {
         }
     }
 
+
+    //管理员根据教师id（tid）删除教师用户
     @DeleteMapping ("/teacher/delTeacher")
     @ResponseBody
     public R delete(@RequestBody Teacher teacher){
@@ -67,6 +65,7 @@ public class TeacherController {
         }
     }
 
+    //管理员根据教师id（tid）修改教师用户信息
     @PutMapping("/teacher/modTeacher")
     @ResponseBody
     public R mod(@RequestBody Teacher teacher){

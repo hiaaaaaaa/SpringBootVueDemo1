@@ -11,14 +11,19 @@ import java.util.List;
 
 @Mapper
 public interface TeacherMapper extends BaseMapper<Teacher> {
+    //查询所有教师
     Page<Teacher> listAll(Page<Teacher> page);
 
+    //根据姓名查询教师
     List<Teacher> listOne(Teacher teacher);
 
+    //添加教师
     int addUpdate(Teacher teacher);
 
+    //删除教师
     int delById(int id);
 
+    //修改教师
     int modUpdate(Teacher teacher);
 
     //根据teacherid查询teacher

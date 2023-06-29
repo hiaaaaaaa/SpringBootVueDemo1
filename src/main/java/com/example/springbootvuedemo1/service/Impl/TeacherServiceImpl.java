@@ -18,6 +18,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
     @Resource
     private TeacherMapper teacherMapper;
 
+    //查看所有教师
     @Override
     public List<Teacher> listAllTeacher(int pageNum, int pageSize) {
         //使用mybatis-plus的分页插件
@@ -25,24 +26,28 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         return teacherMapper.listAll(page).getRecords();
     }
 
+    //根据姓名查询教师
     @Override
     public List<Teacher> listOneTeacher(Teacher teacher) {
         List<Teacher> list = this.teacherMapper.listOne(teacher);
         return list;
     }
 
+    //添加教师
     @Override
     public int addTeacher(Teacher teacher) {
         int result = this.teacherMapper.addUpdate(teacher);
         return result;
     }
 
+    //删除教师
     @Override
     public int delTeacher(int id) {
         int result = this.teacherMapper.delById(id);
         return result;
     }
 
+    //修改教师
     @Override
     public int modTeacher(Teacher teacher) {
         int result = this.teacherMapper.modUpdate(teacher);

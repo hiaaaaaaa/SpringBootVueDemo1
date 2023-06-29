@@ -12,19 +12,28 @@ import java.util.List;
 
 @Mapper
 public interface StudentMapper extends BaseMapper<Student> {
+    //查询所有学生
     Page<Student> listAll(Page<Student> page);
 
+    //根据姓名查询学生
     List<Student> listOne(Student student);
 
+    //添加学生
     int addUpdate(Student student);
 
+    //删除学生
     int deleteById(int id);
 
+    //修改学生
     int modUpdate(Student student);
 
+    //同意学生申请
     int aggUpdate(SC sc);
 
+    //不同意学生申请
     int disUpdate(SC sc);
+
+    //查询学生申请表
     Page<Student> listReq(Page<Student> page);
 
     /*

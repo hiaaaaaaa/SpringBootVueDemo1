@@ -25,6 +25,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Autowired
     private QuestionMapper questionMapper;
 
+    //查看所有学生
     @Override
     public List<Student> listAllStudent(int pageNum, int pageSize){
         //使用mybatis-plus的分页插件
@@ -32,36 +33,42 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return studentMapper.listAll(page).getRecords();
     }
 
+    //根据姓名查询学生
     @Override
     public List<Student> listOneStudent(Student student) {
         List<Student> list = this.studentMapper.listOne(student);
         return list;
     }
 
+    //查看学生申请加入班级
     @Override
     public List<Student> listReqStudent(int pageNum, int pageSize){
         Page<Student> page = new Page<>(pageNum, pageSize);
         return studentMapper.listReq(page).getRecords();
     }
 
+    //添加学生
     @Override
     public int addStudent(Student student) {
         int result = this.studentMapper.addUpdate(student);
         return result;
     }
 
+    //删除学生
     @Override
     public int delStudent(int id){
         int result = this.studentMapper.deleteById(id);
         return result;
     }
 
+    //修改学生
     @Override
     public int modStudent(Student student){
         int result = this.studentMapper.modUpdate(student);
         return result;
     }
 
+    //同意学生的加入班级申请
     @Override
     public int agreeStudent(SC sc){
         int result = this.studentMapper.aggUpdate(sc);
@@ -69,6 +76,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return result;
     }
 
+    //拒绝学生的加入班级申请
     @Override
     public int disStudent(SC sc){
         int result = this.studentMapper.disUpdate(sc);

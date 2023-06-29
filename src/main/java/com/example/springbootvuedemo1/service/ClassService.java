@@ -13,19 +13,4 @@ public interface ClassService extends IService<Class> {
 
     List<Class> getNClassInfoBySid(int sid,int pageNum,int pageSize);
 
-    //List<Class> listMyAllY();
-
-    //查询班级
-    //List<Class> chaxunbanjijiaruqingkuang();
-
-    //    @Override
-    //    public List<Class> listY(){
-    //        return classMapper.listMyAll();
-    //    }
-        //查询班级
-//    List<Class> selectClass();
-//
-//    //查询num
-//    int selectnum();
-//    List<Class> listY();
 }
