@@ -48,7 +48,8 @@ public interface ClassMapper extends BaseMapper<Class>{
             "<if test='cname != \"\" and cname != null '>"+
             ",cname=#{cname}"+
             "</if>"+
-            "<if test='cdescribe != \"\" and cdescribe != null '>"+
+            "<if test='cdescribe != \"\" and cdescrib" +
+            "e != null '>"+
             ",cdescribe=#{cdescribe}"+
             "</if>"+
             "where cid=#{cid}"+

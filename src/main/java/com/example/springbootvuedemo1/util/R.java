@@ -52,4 +52,5 @@ public class R extends HashMap<String, Object> {
         r.put("code",code);
         return r;
     }
+
 }
