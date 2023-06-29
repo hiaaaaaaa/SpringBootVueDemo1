@@ -13,4 +13,5 @@ public interface ClassService extends IService<Class> {
 
     List<Class> getNClassInfoBySid(int sid,int pageNum,int pageSize);
 
+    List<Class> getOwnClass(int tid,int pageNum,int pageSize);
 }

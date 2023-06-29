@@ -1,6 +1,7 @@
 package com.example.springbootvuedemo1.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springbootvuedemo1.entity.Examination;
 import com.example.springbootvuedemo1.entity.SC;
@@ -18,14 +19,23 @@ public interface StudentMapper extends BaseMapper<Student> {
     //根据姓名查询学生
     List<Student> listOne(Student student);
 
-    //添加学生
+    //管理员添加学生
     int addUpdate(Student student);
 
-    //删除学生
+    //管理员删除学生
     int deleteById(int id);
 
-    //修改学生
+    //管理员修改学生
     int modUpdate(Student student);
+    //教师删除学生
+    int delByIdInSC(int sid,int cid);
+
+    //教师查看班级学员
+    List<Student> selectStudentByCid(Integer cid);
+
+    //教师添加班级学员
+    int addStuInSC(SC sc);
+
 
     //同意学生申请
     int aggUpdate(SC sc);

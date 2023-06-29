@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springbootvuedemo1.entity.Class;
 import com.example.springbootvuedemo1.entity.Student;
+import com.example.springbootvuedemo1.entity.Teacher;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -19,6 +20,9 @@ public interface ClassMapper extends BaseMapper<Class>{
 
     //根据学生id查询未加入班级信息
     Page<Class> getNClassInfoBySid(@Param("sid") int sid,Page<Student> page);
+
+    //根据tid查询对应所教授的班级信息
+    Page<Class> getOwnClass(@Param("tid") int tid, Page<Teacher> page);
 
     /*
      * cid	int

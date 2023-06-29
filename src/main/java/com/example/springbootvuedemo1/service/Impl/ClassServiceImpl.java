@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springbootvuedemo1.entity.Class;
 import com.example.springbootvuedemo1.entity.Student;
+import com.example.springbootvuedemo1.entity.Teacher;
 import com.example.springbootvuedemo1.mapper.ClassMapper;
 import com.example.springbootvuedemo1.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements
     public List<Class> getNClassInfoBySid(int sid,int pageNum, int pageSize) {
         Page<Student> page = new Page<>(pageNum, pageSize);
         return classMapper.getNClassInfoBySid(sid,page).getRecords();
+    }
+
+    //教师查看自己创建的班级列表信息
+    public List<Class> getOwnClass(int tid,int pageNum,int pageSize){
+        Page<Teacher> page = new Page<>(pageNum,pageSize);
+        return classMapper.getOwnClass(tid,page).getRecords();
     }
 
 

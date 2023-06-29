@@ -2,6 +2,8 @@ package com.example.springbootvuedemo1.controller;
 
 import cn.hutool.core.codec.Base64Encoder;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springbootvuedemo1.entity.SC;
 import com.example.springbootvuedemo1.entity.Score;
 import com.example.springbootvuedemo1.entity.Student;
@@ -9,12 +11,15 @@ import com.example.springbootvuedemo1.service.Impl.LoginService;
 import com.example.springbootvuedemo1.service.Impl.StudentServiceImpl;
 import com.example.springbootvuedemo1.service.StudentService;
 import com.example.springbootvuedemo1.util.R;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -127,13 +132,25 @@ public class StudentController {
         }
     }
 
-    //教师查看所有学生列表数据
+    //教师根据cid查看班级中成员列表信息
     @GetMapping("/student/tlistall")
-    public List<Student> tlistall(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
-        return studentService.listAllStudent(pageNum, pageSize);
+    @ResponseBody
+    public R getOwnStuList(Integer cid, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        List<Student> list = this.studentService.listStudentByCid(cid);
+        PageInfo<Student> pageInfo = new PageInfo<>(list);
+        return R.ok().setData(pageInfo);
     }
 
-    //教师根据学生姓名（sname）进行查询
+//    @GetMapping("/student/tlistall")
+//    @ResponseBody
+//    public R getOwnStuList(Integer cid){
+//        List<Student> list = this.studentService.listStudentByCid(cid);
+//        return R.ok().setData(list);
+//    }
+
+
+    //教师根据学生姓名（sname）进行查询学生
     @GetMapping("/student/tlists")
     @ResponseBody
     public R tgetList(Student student){
@@ -142,15 +159,27 @@ public class StudentController {
         return R.ok().setData(list);
     }
 
-    //教师根据学生id（sid）删除学生表中学生数据
+    //教师根据学生id（sid）删除sc表中学生信息
     @DeleteMapping ("/student/tdelete")
     @ResponseBody
     public R tdelete(@RequestBody Student student){
-        int result = this.studentService.delStudent(student.getSid());
+        int result = this.studentService.delStudentInSC(student.getSid(),student.getCid());
         if(result > 0){
             return R.ok();
         }else {
             return R.error(100,"教师删除学生数据失败");
+        }
+    }
+
+    //教师用户输入tid和cid增加sc表中班级学员
+    @PostMapping("/student/addStuInSC")
+    @ResponseBody
+    public R addStuInSC(@RequestBody SC sc){
+        int result = this.studentService.addStudentInSC(sc);
+        if(result > 0){
+            return R.ok();
+        }else {
+            return R.error(100,"教师添加学生失败");
         }
     }
 

@@ -1,6 +1,8 @@
 package com.example.springbootvuedemo1.service.Impl;
 
 import cn.hutool.core.codec.Base64Encoder;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springbootvuedemo1.entity.Question;
@@ -25,7 +27,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Autowired
     private QuestionMapper questionMapper;
 
-    //查看所有学生
+    //管理员查看所有学生
     @Override
     public List<Student> listAllStudent(int pageNum, int pageSize){
         //使用mybatis-plus的分页插件
@@ -33,33 +35,55 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return studentMapper.listAll(page).getRecords();
     }
 
-    //根据姓名查询学生
+    //管理员根据姓名查询学生
     @Override
     public List<Student> listOneStudent(Student student) {
         List<Student> list = this.studentMapper.listOne(student);
         return list;
     }
 
-    //查看学生申请加入班级
+    //教师查看学生申请加入班级表
     @Override
     public List<Student> listReqStudent(int pageNum, int pageSize){
         Page<Student> page = new Page<>(pageNum, pageSize);
         return studentMapper.listReq(page).getRecords();
     }
 
-    //添加学生
+    //管理员添加学生
     @Override
     public int addStudent(Student student) {
         int result = this.studentMapper.addUpdate(student);
         return result;
     }
 
-    //删除学生
+    //管理员删除学生
     @Override
     public int delStudent(int id){
         int result = this.studentMapper.deleteById(id);
         return result;
     }
+
+    //教师删除学生
+    @Override
+    public int delStudentInSC(int sid,int cid){
+        int result = this.studentMapper.delByIdInSC(sid,cid);
+        return result;
+    }
+
+    //教师查看班级学员
+    @Override
+    public List<Student> listStudentByCid(Integer cid) {
+        List<Student> list = this.studentMapper.selectStudentByCid(cid);
+        return list;
+    }
+
+    //教师添加学生
+    @Override
+    public int addStudentInSC(SC sc) {
+        int result = this.studentMapper.addStuInSC(sc);
+        return result;
+    }
+
 
     //修改学生
     @Override

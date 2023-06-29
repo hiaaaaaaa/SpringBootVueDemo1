@@ -35,9 +35,27 @@
         values (#{userName},#{password},#{sname},#{sex},#{age},#{email},#{phoneNumber})
     </insert>
 
+    <!--管理员删除学生表数据-->
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from student where sid=#{sid}
     </delete>
+
+    <!--教师删除sc表中学生数据-->
+    <delete id="delByIdInSC" parameterType="java.lang.Integer">
+        delete from sc where sid=#{sid} and cid=#{cid}
+    </delete>
+
+    <!--教师查看班级学员-->
+    <select id="selectStudentByCid" parameterType="com.example.springbootvuedemo1.entity.Student">
+        select sc.sid,student.userName,student.sname,student.age,student.sex,student.email,student.phoneNumber
+        from sc,student where cid=#{cid} and student.sid=sc.sid and sc.state=1
+    </select>
+
+    <!--教师添加班级学员-->
+    <insert id="addStuInSC" parameterType="com.example.springbootvuedemo1.entity.SC">
+        insert into sc (sid,cid,state)
+        values (#{sid},#{cid},1)
+    </insert>
 
     <update id="modUpdate" parameterType="com.example.springbootvuedemo1.entity.Student">
         update student

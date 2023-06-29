@@ -37,6 +37,14 @@ public class ClassController {
         return classService.getNClassInfoBySid(student.getSid(),pageNum, pageSize);
     }
 
+    //教师查看自己创建的班级列表信息
+    @GetMapping("/teacher/selectownclass")
+    @ResponseBody
+    public List<Class> getOwnClass(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
+        Teacher teacher=cacheService.getObject("user",Teacher.class);
+        return classService.getOwnClass(teacher.getTid(),pageNum, pageSize);
+    }
+
     @Resource
     ClassServiceImpl classServiceImpl;
 
