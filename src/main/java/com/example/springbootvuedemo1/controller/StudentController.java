@@ -171,7 +171,7 @@ public class StudentController {
         }
     }
 
-    //教师用户输入tid和cid增加sc表中班级学员
+    //教师用户输入cid和cid增加sc表中班级学员
     @PostMapping("/student/addStuInSC")
     @ResponseBody
     public R addStuInSC(@RequestBody SC sc){
