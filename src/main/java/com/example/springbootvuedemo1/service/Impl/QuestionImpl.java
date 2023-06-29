@@ -27,8 +27,8 @@ public class QuestionImpl {
         questionMapper.deleteQuestionByEid(eid);
     }
     //根据id修改题目
-    public void updateQuestionById(Integer eid, Integer qid, String qdescribe, String answer,Integer point){
-        questionMapper.updateQuestionById(eid,qid,qdescribe,answer,point);
+        public void updateQuestionById(Integer eid, Integer qid, String qdescribe, String answer,Integer point,Integer qtype,String a,String b,String c,String d){
+        questionMapper.updateQuestionById(eid,qid,qdescribe,answer,point,qtype,a,b,c,d);
     }
     //查询某一份试卷的所有题目
     public List<Question> selectQuestionByEid(Integer eid) {

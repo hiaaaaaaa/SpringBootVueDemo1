@@ -47,13 +47,13 @@ public class QuestionController {
      */
     @ResponseBody
     @RequestMapping("/updateQuestionById")
-    public R updateQuestionById(Integer eid, Integer qid, String qdescribe, String answer,Integer point){
+    public R updateQuestionById(Integer eid, Integer qid, String qdescribe, String answer,Integer point,Integer qtype,String a,String b,String c,String d){
         System.out.println("eid:"+eid);
         System.out.println("qid:"+qid);
         System.out.println("qdescribe:"+qdescribe);
         System.out.println("answer:"+answer);
         //调用service层,修改题目
-        questionImpl.updateQuestionById(eid,qid,qdescribe,answer,point);
+        questionImpl.updateQuestionById(eid,qid,qdescribe,answer,point,qtype,a,b,c,d);
         return R.ok("修改成功！");
     }
     /*

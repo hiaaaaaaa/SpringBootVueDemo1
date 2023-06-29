@@ -27,7 +27,7 @@ public interface QuestionMapper {
             "<if test='d!=null'>d=#{d},</if>" +
             "qid=#{qid} where eid=#{eid} and qid=#{qid}"+
             "</script>")
-    void updateQuestionById(@Param("eid") Integer eid, @Param("qid") Integer qid, @Param("qdescribe") String qdescribe, @Param("answer") String answer, @Param("point") Integer point);
+    void updateQuestionById(Integer eid,Integer qid,String qdescribe,String answer,Integer point,Integer qtype,String a,String b,String c,String d);
 
     //查询某一份试卷的所有题目
     @Select("select * from examquestion where eid=#{eid}")
