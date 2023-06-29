@@ -89,6 +89,7 @@
                 phoneNumber=#{phoneNumber}
             </if>
         </set>
+        where userName=#{userName}
     </update>
 
     <!--修改密码-->
