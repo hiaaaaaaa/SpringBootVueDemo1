@@ -74,19 +74,19 @@
         update teacher
         <set>
             <if test="tname!=null and tname!=''">
-                tname=#{tname}
+                tname=#{tname},
             </if>
             <if test="sex!=null and sex!=''">
-                sex=#{sex}
+                sex=#{sex},
             </if>
             <if test="age!=null and age!=''">
-                age=#{age}
+                age=#{age},
             </if>
             <if test="email!=null and email!=''">
-                email=#{email}
+                email=#{email},
             </if>
             <if test="phoneNumber!=null and phoneNumber!=''">
-                phoneNumber=#{phoneNumber}
+                phoneNumber=#{phoneNumber},
             </if>
         </set>
         where userName=#{userName}
