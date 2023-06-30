@@ -142,8 +142,15 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return result;
     }
 
-    public void insertScore(Integer sid, Integer eid, String score) {
-        questionMapper.insertStudentScore(sid,eid,Integer.parseInt(score));
+    public void insertScore(Integer sid, Integer eid, Integer score) {
+        //查询es表是否存在该学生的成绩
+        Score score1 = questionMapper.selectScoreBySidAndEid(sid, eid);
+        if (score1!=null){
+            //存在则更新
+            questionMapper.updateStudentScore(sid,eid,score);
+        }else {
+            questionMapper.insertStudentScore(sid,eid,score);
+        }
     }
 
     public boolean loginCheck(String userName,String password){

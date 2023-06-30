@@ -1,6 +1,7 @@
 package com.example.springbootvuedemo1.mapper;
 
 import com.example.springbootvuedemo1.entity.Question;
+import com.example.springbootvuedemo1.entity.Score;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -41,4 +42,9 @@ public interface QuestionMapper {
     @Insert("insert into es(sid,eid,score) values(#{sid},#{eid},#{score})")
     void insertStudentScore(Integer sid, Integer eid, Integer score);
 
+    @Select("select * from es where sid=#{sid} and eid=#{eid}")
+    Score selectScoreBySidAndEid(Integer sid, Integer eid);
+
+    @Update("update es set score=#{score} where sid=#{sid} and eid=#{eid}")
+    void updateStudentScore(Integer sid, Integer eid, Integer score);
 }

@@ -58,7 +58,7 @@ public class StudentController {
     //前端处理学生答案与正确答案比对，返回成绩
     @ResponseBody
     @RequestMapping("/studentAnswer")
-    public R studentAnswer(Integer sid, Integer eid,String score){
+    public R studentAnswer(Integer sid, Integer eid,Integer score){
         //插入成绩表
         studentServiceImpl.insertScore(sid,eid,score);
         return R.ok("提交成功！");
