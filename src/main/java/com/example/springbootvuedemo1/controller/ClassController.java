@@ -6,6 +6,7 @@ import com.example.springbootvuedemo1.entity.Teacher;
 import com.example.springbootvuedemo1.service.ClassService;
 import com.example.springbootvuedemo1.service.Impl.ClassServiceImpl;
 import com.example.springbootvuedemo1.util.CacheService;
+import com.example.springbootvuedemo1.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +25,10 @@ public class ClassController {
     //学生查看已加入班级的整体情况
     @GetMapping("/class/yijiaru")
     @ResponseBody
-    public List<Class> getYClassInfoBySid(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
+    public R getYClassInfoBySid(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
         Student student=cacheService.getObject("user",Student.class);
-        return classService.getYClassInfoBySid(student.getSid(),pageNum, pageSize);
+        List<Class> list=classService.getYClassInfoBySid(student.getSid(),pageNum, pageSize);
+        return R.ok().setData(list);
     }
 
     //学生查看没有加入的班级的整体情况
