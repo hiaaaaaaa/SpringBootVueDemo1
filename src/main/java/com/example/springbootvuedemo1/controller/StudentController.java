@@ -94,12 +94,19 @@ public class StudentController {
 
 
     //管理员根据学生姓名（sname）进行查询
+//    @GetMapping("/student/lists")
+//    @ResponseBody
+//    public R getList(Student student){
+//        System.out.println("学生姓名："+student.getSname());
+//        List<Student> list = this.studentService.listOneStudent(student);
+//        return R.ok().setData(list);
+//    }
     @GetMapping("/student/lists")
     @ResponseBody
-    public R getList(Student student){
+    public List<Student> getList(Student student){
         System.out.println("学生姓名："+student.getSname());
         List<Student> list = this.studentService.listOneStudent(student);
-        return R.ok().setData(list);
+        return list;
     }
 
     //管理员向学生表中添加数据
@@ -159,10 +166,10 @@ public class StudentController {
     //教师根据学生姓名（sname）进行查询学生
     @GetMapping("/student/tlists")
     @ResponseBody
-    public R tgetList(Student student){
+    public List<Student> tgetList(Student student){
         System.out.println("学生姓名："+student.getSname());
         List<Student> list = this.studentService.listOneStudent(student);
-        return R.ok().setData(list);
+        return list;
     }
 
     //教师根据学生id（sid）删除sc表中学生信息

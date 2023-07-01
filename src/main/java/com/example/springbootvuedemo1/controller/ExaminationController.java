@@ -53,13 +53,9 @@ public class ExaminationController {
                     defaultImage[2]=IOUtils.toByteArray(getClass().getResourceAsStream("/static/examdefaultpic/default03.jpg"));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-
                 }
             }
-            else{
-                image=defaultImage[defaultImageIndex];
-            }
-
+            image=defaultImage[defaultImageIndex];
         }
         else {
             //获取文件二进制格式

@@ -65,6 +65,10 @@ public interface StudentMapper extends BaseMapper<Student> {
     )
     List<Score> selectScoreBySid(Integer sid);
 
+//    @Select("select * from es,examination e    " +
+//            "where sid=#{sid} and es.eid=e.eid  ")
+//    List<Score> selectScoreBySid(Integer sid);
+
     /*
     * 作者：万梓欣
     * */

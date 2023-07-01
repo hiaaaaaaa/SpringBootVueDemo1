@@ -33,11 +33,18 @@ public class TeacherController {
     }
 
     //管理员根据姓名（tname）查询教师
+//    @GetMapping("/teacher/listoneTeacher")
+//    @ResponseBody
+//    public R getone(Teacher teacher){
+//        List<Teacher> list = this.teacherService.listOneTeacher(teacher);
+//        return R.ok().setData(list);
+//    }
+    //管理员根据姓名（tname）查询教师
     @GetMapping("/teacher/listoneTeacher")
     @ResponseBody
-    public R getone(Teacher teacher){
+    public List<Teacher> getone(Teacher teacher){
         List<Teacher> list = this.teacherService.listOneTeacher(teacher);
-        return R.ok().setData(list);
+        return list;
     }
 
     //管理员添加教师用户
