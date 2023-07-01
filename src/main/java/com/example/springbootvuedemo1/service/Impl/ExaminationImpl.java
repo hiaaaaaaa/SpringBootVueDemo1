@@ -62,6 +62,7 @@ public class ExaminationImpl {
         }
     }
 
+
     public void deleteExamination(Integer eid) {
         questionMapper.deleteQuestionByEid(eid);
         examinationMapper.deleteExaminationById(eid);

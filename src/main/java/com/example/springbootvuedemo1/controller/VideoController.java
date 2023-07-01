@@ -20,6 +20,11 @@ import java.util.UUID;
 
 @Controller
 public class VideoController {
+    /**
+     * 作者：郭旭
+     * */
+
+
     @Resource
     private VideoImpl videoImpl;
 
@@ -32,13 +37,10 @@ public class VideoController {
     /*=================上传视频，这里使用了云存储=================*/
     @ResponseBody
     @RequestMapping("/uploadVideo")
-   public R uploadVideo(Integer vid, String vname, MultipartFile videoFile, Integer cid) throws IOException{
+   public R uploadVideo(String vname, MultipartFile videoFile, Integer cid) throws IOException{
         try {
             // 1.获取文件上传的字节流
             byte[] fileBytes = videoFile.getBytes();
-
-            // 2.创建日期目录分隔
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM")
 
             // 3.获取文件名
             String originalFilename = videoFile.getOriginalFilename();
@@ -58,19 +60,18 @@ public class VideoController {
             // 将视频存储地址用vlink字段保存
             String vlink = url + "/" + filename;
             // 打印输出一下
-            System.out.println("vid:"+vid);
             System.out.println("vname:"+vname);
             System.out.println("vlink:"+vlink);
             System.out.println("cid:"+cid);
             // 调用service层，上传视频
-            videoImpl.uploadVideo(vid,vname,vlink,cid);
+            videoImpl.uploadVideo(vname,vlink,cid);
 
             return R.ok("视频上传成功！");
 
         }catch (IOException e){
             e.printStackTrace();
         }
-        return R.error(ResultCode.ERROR, "视频上传失败！");
+        return R.error(ResultCode.ERROR,"视频上传失败！");
     }
 
 

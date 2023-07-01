@@ -8,13 +8,22 @@ import java.util.List;
 @Mapper
 public interface VideoMapper {
     /**
+     * 作者：郭旭
+     * */
+
+    /**
      * vid	int
      * vname	varchar (50)
      * vlink	varchar（100）
      * cid	int
      * ******/
 
-    // 上传视频
+    // 上传视频的辅助功能
+    // 查找传过来的cid，在video表中对应的所有vid的最大值
+    @Select("select max(vid) from video where cid=#{cid}")
+    Integer selectMaxVid(Integer cid);
+
+    // 上传视频"insert into video(vid,vname,vlink,cid) values(#{vid},#{vname},#{vlink},#{cid})")
     @Insert("insert into video(vid,vname,vlink,cid) values(#{vid},#{vname},#{vlink},#{cid})")
     void uploadVideo(Integer vid, String vname, String vlink, Integer cid);
 

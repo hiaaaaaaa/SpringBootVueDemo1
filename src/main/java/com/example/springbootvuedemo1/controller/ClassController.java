@@ -25,10 +25,10 @@ public class ClassController {
     //学生查看已加入班级的整体情况
     @GetMapping("/class/yijiaru")
     @ResponseBody
-    public R getYClassInfoBySid(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
+    public List<Class> getYClassInfoBySid(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
         Student student=cacheService.getObject("user",Student.class);
-        List<Class> list=classService.getYClassInfoBySid(student.getSid(),pageNum, pageSize);
-        return R.ok().setData(list);
+        List list=classService.getYClassInfoBySid(student.getSid(),pageNum, pageSize);
+        return list;
     }
 
     //学生查看没有加入的班级的整体情况

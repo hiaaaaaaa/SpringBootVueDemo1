@@ -12,6 +12,7 @@ import com.example.springbootvuedemo1.entity.Student;
 import com.example.springbootvuedemo1.mapper.QuestionMapper;
 import com.example.springbootvuedemo1.mapper.StudentMapper;
 import com.example.springbootvuedemo1.service.StudentService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -191,7 +192,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
 
-    public List<Score> selectScore(Integer sid) {
+    public List<Score> selectScore(Integer sid,Integer page,Integer limit) {
+        PageHelper.startPage(page,limit);
         List<Score> scoreList = studentMapper.selectScoreBySid(sid);
         for (Score score : scoreList) {
             //如果试卷图片不为空，将图片转换为base64
