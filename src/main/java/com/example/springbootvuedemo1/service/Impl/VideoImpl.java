@@ -1,8 +1,11 @@
 package com.example.springbootvuedemo1.service.Impl;
 
+import com.example.springbootvuedemo1.entity.Video;
 import com.example.springbootvuedemo1.mapper.VideoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class VideoImpl {
@@ -36,7 +39,7 @@ public class VideoImpl {
     }
 
     //查询课程的所有题目
-    public Object selectVideoByCid(Integer cid) {
+    public List<Video> selectVideoByCid(Integer cid) {
 
         return videoMapper.selectVideoByCid(cid);
     }

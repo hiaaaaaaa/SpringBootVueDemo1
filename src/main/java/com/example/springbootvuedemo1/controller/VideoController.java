@@ -1,10 +1,13 @@
 package com.example.springbootvuedemo1.controller;
 
+import com.example.springbootvuedemo1.entity.Video;
 import com.example.springbootvuedemo1.service.Impl.VideoImpl;
 import com.example.springbootvuedemo1.util.R;
 import com.example.springbootvuedemo1.util.ResultCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -113,11 +117,14 @@ public class VideoController {
     /*=================根据课程id，查询所有视频=================*/
     @ResponseBody
     @RequestMapping("/selectVideoByCid")
-    public String selectVideoByCid(Integer cid){
+    public R selectVideoByCid(Integer cid,Integer page,Integer limit){
         System.out.println("cid:"+cid);
-        String json = objectToJson(videoImpl.selectVideoByCid(cid));
-        System.out.println(json);
-        return json;
+//        String json = objectToJson(videoImpl.selectVideoByCid(cid));
+//        System.out.println(json);
+        PageHelper.startPage(page,limit);
+        List<Video> videoList=videoImpl.selectVideoByCid(cid);
+        PageInfo<Video> pageInfo=new PageInfo<>(videoList);
+        return R.ok().setData(pageInfo);
     }
 
 
