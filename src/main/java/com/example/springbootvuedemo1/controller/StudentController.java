@@ -70,7 +70,8 @@ public class StudentController {
     public R selectScore(Integer sid,Integer page,Integer limit){
         //调用service层,学生查看自己的成绩以及试卷信息
         List<Score> list = studentServiceImpl.selectScore(sid,page,limit);
-        return R.ok().setData(list);
+        PageInfo<Score> pageInfo = new PageInfo<>(list);
+        return R.ok().setData(pageInfo);
     }
 
     /*
