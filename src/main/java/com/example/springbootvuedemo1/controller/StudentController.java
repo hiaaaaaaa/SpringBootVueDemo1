@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.springbootvuedemo1.entity.SC;
 import com.example.springbootvuedemo1.entity.Score;
 import com.example.springbootvuedemo1.entity.Student;
+import com.example.springbootvuedemo1.entity.Teacher;
 import com.example.springbootvuedemo1.service.Impl.LoginService;
 import com.example.springbootvuedemo1.service.Impl.StudentServiceImpl;
 import com.example.springbootvuedemo1.service.StudentService;
+import com.example.springbootvuedemo1.util.CacheService;
 import com.example.springbootvuedemo1.util.R;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -33,6 +35,9 @@ public class StudentController {
     @Resource
     //定义service
     private StudentServiceImpl studentServiceImpl;
+
+    @Autowired
+    private CacheService cacheService;
     //学生申请加入班级
     @ResponseBody
     @RequestMapping("/insertStudentClass")
@@ -188,7 +193,8 @@ public class StudentController {
     //教师查看学生申请进入班级情况表
     @GetMapping("/student/listRequest")
     public R listRequest(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
-        Map<String,Object> map=studentService.listReqStudent(pageNum,pageSize);
+        Integer tid =cacheService.getObject("user", Teacher.class).getTid();
+        Map<String,Object> map=studentService.listReqStudent(pageNum,pageSize,tid);
         return R.ok().setData(map);
     }
 

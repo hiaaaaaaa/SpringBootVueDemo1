@@ -87,6 +87,24 @@ public class ClassController {
 
 
     /**
+     * 功能描述： 教师用户、学生用户在自己所加入的班级中，根据关键字查询班级信息，
+     * 前端返回对应的班级信息
+     * */
+    @ResponseBody
+    @RequestMapping("/selectClassByTidAndKey")
+    public List<Class> selectClassByTidAndKey(Integer tid, String keyword){
+        List list = classServiceImpl.selectClassByTidAndKey(tid, keyword);
+        return list;
+    }
+    @ResponseBody
+    @RequestMapping("/selectClassBySidAndKey")
+    public List<Class> selectClassBySidAndKey(Integer sid,String keyword){
+        List list = classServiceImpl.selectClassBySidAndKey(sid, keyword);
+        return list;
+    }
+
+
+    /**
      * 功能描述： 教师用户、学生用户根据关键词查询班级信息，前端返回所有符合条件的班级信息
      * */
     @ResponseBody

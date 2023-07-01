@@ -46,11 +46,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     //教师查看学生申请加入班级表
     @Override
-    public Map<String, Object> listReqStudent(int pageNum, int pageSize){
+    public Map<String, Object> listReqStudent(int pageNum, int pageSize,Integer tid){
         Page<Student> page = new Page<>(pageNum, pageSize);
         Map<String, Object> map = new HashMap<>();
-        map.put("list",studentMapper.listReq(page).getRecords());
-        map.put("total",studentMapper.listReq(page).getTotal());
+        map.put("list",studentMapper.listReq(page,tid).getRecords());
+        map.put("total",studentMapper.listReq(page,tid).getTotal());
         return map;
     }
 

@@ -24,6 +24,12 @@ public interface ClassMapper extends BaseMapper<Class>{
     //根据tid查询对应所教授的班级信息
     Page<Class> getOwnClass(@Param("tid") int tid, Page<Teacher> page);
 
+
+
+
+    /**
+     * 作者：郭旭
+     * */
     /*
      * cid	int
      * cname	varchar(50)
@@ -60,6 +66,26 @@ public interface ClassMapper extends BaseMapper<Class>{
     // 查看所有班级
     @Select("select * from class")
     List<Class> selectAllClass();
+
+
+
+    // 教师查询自己创建班级的某个班级
+    @Select({"<script>",
+            "select * from class c where c.cid != 0 and c.tid=#{tid}",
+            "<if test = 'keyword != \"\" and keyword != null '>",
+            "and c.cname like CONCAT('%',#{keyword},'%')",
+            "</if>",
+            "</script>"})
+    List<Class> selectClassByTidAndKey(Integer tid, String keyword);
+    // 学生在对应cid中，根据关键字查找某个班级
+    @Select({"<script>",
+            "select * from sc,class where sc.sid = #{sid} and sc.cid = class.cid",
+            "<if test = 'keyword != \"\" and keyword != null '>",
+            "and class.cname like CONCAT('%',#{keyword},'%')",
+            "</if>",
+            "</script>"})
+    List<Class> selectClassBySidAndKey(Integer sid, String keyword);
+
 
 
     // 查询某个班级

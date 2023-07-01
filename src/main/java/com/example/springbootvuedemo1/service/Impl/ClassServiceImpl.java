@@ -45,6 +45,8 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements
     }
 
 
+
+
     /*
      *作者：郭旭
      * */
@@ -54,8 +56,16 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements
         return classMapper.selectAllClass();
     }
 
+    // 教师根据关键词，在自己所在的班级里面查找
+    public List<Class> selectClassByTidAndKey(Integer tid, String keyword){
+        return classMapper.selectClassByTidAndKey(tid,keyword);
+    }
+    // 学生根据关键词，在自己所在的班级里面查找
+    public List<Class> selectClassBySidAndKey(Integer sid, String keyword){
+        return classMapper.selectClassBySidAndKey(sid,keyword);
+    }
 
-    // 根据关键字查询班级
+    // 根据关键字，在所有班级里面查询
     public List<Class> selectClass(String keyword){
         return classMapper.selectClass(keyword);
     }

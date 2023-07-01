@@ -27,7 +27,7 @@ public interface StudentService extends IService<Student> {
 
     int modStudent(Student student);
 
-    Map<String,Object> listReqStudent(int pageNum, int pageSize);
+    Map<String,Object> listReqStudent(int pageNum, int pageSize, Integer tid);
 
     int agreeStudent(SC sc);
 

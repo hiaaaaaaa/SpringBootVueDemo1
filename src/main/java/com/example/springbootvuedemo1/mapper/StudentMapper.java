@@ -44,7 +44,7 @@ public interface StudentMapper extends BaseMapper<Student> {
     int disUpdate(SC sc);
 
     //查询学生申请表
-    Page<Student> listReq(Page<Student> page);
+    Page<Student> listReq(Page<Student> page,Integer tid);
 
     /*
     * 作者：梁伟静

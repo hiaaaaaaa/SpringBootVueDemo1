@@ -23,10 +23,16 @@
         <result column="cid" property="cid"/>
         <result column="cname" property="cname"/>
     </resultMap>
+<!--    <select id="listReq" resultMap="classReqInfo">-->
+<!--        select student.sid, student.userName, student.sname, sc.cid, class.cname-->
+<!--        from student left join sc on student.sid=sc.sid left join class on sc.cid=class.cid-->
+<!--        where sc.state=0-->
+<!--    </select>-->
+
     <select id="listReq" resultMap="classReqInfo">
-        select student.sid, student.userName, student.sname, sc.cid, class.cname
-        from student left join sc on student.sid=sc.sid left join class on sc.cid=class.cid
-        where sc.state=0
+        select s.sid, s.userName, s.sname, sc.cid, c.cname
+        from student s,class c,sc
+        where s.sid=sc.sid and c.cid=sc.cid and sc.state=0 and c.tid=#{tid}
     </select>
 
 
