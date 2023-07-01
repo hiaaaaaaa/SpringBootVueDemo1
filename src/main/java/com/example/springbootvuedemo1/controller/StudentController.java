@@ -136,11 +136,11 @@ public class StudentController {
     //教师根据cid查看班级中成员列表信息
     @GetMapping("/student/tlistall")
     @ResponseBody
-    public R getOwnStuList(Integer cid, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize){
+    public List<Student> getOwnStuList(Integer cid, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize){
         PageHelper.startPage(pageNum, pageSize);
         List<Student> list = this.studentService.listStudentByCid(cid);
         PageInfo<Student> pageInfo = new PageInfo<>(list);
-        return R.ok().setData(pageInfo);
+        return list;
     }
 
 //    @GetMapping("/student/tlistall")
