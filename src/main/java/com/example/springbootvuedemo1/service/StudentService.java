@@ -8,6 +8,7 @@ import com.example.springbootvuedemo1.entity.SC;
 import com.example.springbootvuedemo1.entity.Student;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService extends IService<Student> {
     List<Student> listAllStudent(int pageNum,int pageSize);
@@ -26,7 +27,7 @@ public interface StudentService extends IService<Student> {
 
     int modStudent(Student student);
 
-    List<Student> listReqStudent(int pageNum,int pageSize);
+    Map<String,Object> listReqStudent(int pageNum, int pageSize);
 
     int agreeStudent(SC sc);
 

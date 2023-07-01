@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,9 +46,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     //教师查看学生申请加入班级表
     @Override
-    public List<Student> listReqStudent(int pageNum, int pageSize){
+    public Map<String, Object> listReqStudent(int pageNum, int pageSize){
         Page<Student> page = new Page<>(pageNum, pageSize);
-        return studentMapper.listReq(page).getRecords();
+        Map<String, Object> map = new HashMap<>();
+        map.put("list",studentMapper.listReq(page).getRecords());
+        map.put("total",studentMapper.listReq(page).getTotal());
+        return map;
     }
 
     //管理员添加学生

@@ -3,7 +3,6 @@ package com.example.springbootvuedemo1.controller;
 import cn.hutool.core.codec.Base64Encoder;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springbootvuedemo1.entity.SC;
 import com.example.springbootvuedemo1.entity.Score;
 import com.example.springbootvuedemo1.entity.Student;
@@ -11,6 +10,7 @@ import com.example.springbootvuedemo1.service.Impl.LoginService;
 import com.example.springbootvuedemo1.service.Impl.StudentServiceImpl;
 import com.example.springbootvuedemo1.service.StudentService;
 import com.example.springbootvuedemo1.util.R;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,8 +187,9 @@ public class StudentController {
     //教师审核学员申请
     //教师查看学生申请进入班级情况表
     @GetMapping("/student/listRequest")
-    public List<Student> listRequest(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
-        return studentService.listReqStudent(pageNum, pageSize);
+    public R listRequest(@RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
+        Map<String,Object> map=studentService.listReqStudent(pageNum,pageSize);
+        return R.ok().setData(map);
     }
 
     //教师同意学生申请
